@@ -4,39 +4,37 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class Database (context: Context, name:String, factory: SQLiteDatabase.CursorFactory?, version: Int) :
-    SQLiteOpenHelper(context, name, factory, version) {
-    override fun onCreate(db: SQLiteDatabase?) {
-        // Sentencia SQL para crear la tabla Profesor
-        val createTableProfesor = "CREATE TABLE profesores (id_profesor INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT);"
+class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
-        // Sentencia SQL para crear la tabla Materia
-        val createTableMateria = "CREATE TABLE materias (id_materia INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, id_profesor INTEGER, horario TEXT, FOREIGN KEY (id_profesor) REFERENCES profesores (id_profesor));"
-
-        // Sentencia SQL para crear la tabla Tarea
-        val createTableTarea = "CREATE TABLE tareas (id_tarea INTEGER PRIMARY KEY AUTOINCREMENT, descripcion TEXT, fecha TEXT, completada INTEGER);"
-
-        // Sentencia SQL para crear la tabla Evento
-        val createTableEvento = "CREATE TABLE eventos (id_evento INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, descripcion TEXT, fecha TEXT, hora TEXT);"
-
-        // Sentencia SQL para crear la tabla AgendaPersonal
-        val createTableAgendaPersonal = "CREATE TABLE eventos_has_materias (id_agenda INTEGER PRIMARY KEY AUTOINCREMENT, id_materia INTEGER, id_evento INTEGER, FOREIGN KEY (id_materia) REFERENCES materias (id_materia), FOREIGN KEY (id_evento) REFERENCES eventos (id_evento));"
-
-        db?.execSQL(createTableProfesor)
-        db?.execSQL(createTableMateria)
-        db?.execSQL(createTableTarea)
-        db?.execSQL(createTableEvento)
-        db?.execSQL(createTableAgendaPersonal)
-
-
+    companion object {
+        private const val DATABASE_NAME = "agenda.db"
+        private const val DATABASE_VERSION = 1
     }
 
-    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db?.execSQL("drop table if exists profesores")
-        db?.execSQL("drop table if exists materias")
-        db?.execSQL("drop table if exists tareas")
-        db?.execSQL("drop table if exists eventos")
-        db?.execSQL("drop table if exists eventos_has_materias")
+    override fun onCreate(db: SQLiteDatabase) {
+        val createTableQueries = arrayOf(
+            "CREATE TABLE Profesores (id_prof INTEGER NOT NULL, nomb_pro TEXT NOT NULL, Telefono TEXT, correo TEXT, direccion TEXT, horario TEXT NOT NULL, foto BLOB, PRIMARY KEY(id_prof))",
+            "CREATE TABLE profesor_has_materias (id_prof INTEGER NOT NULL, id_mat INTEGER NOT NULL, fk_id_prof INTEGER NOT NULL, fk_id_mat INTEGER NOT NULL, FOREIGN KEY (fk_id_prof) REFERENCES Profesores(id_prof), FOREIGN KEY (fk_id_mat) REFERENCES materias(id_mat))",
+            "CREATE TABLE materias (id_mat INTEGER NOT NULL, nombre TEXT NOT NULL, aula TEXT NOT NULL, horario TEXT NOT NULL, nota TEXT, PRIMARY KEY(id_mat))",
+            "CREATE TABLE Agenda (id_agenda INTEGER NOT NULL, nombre TEXT NOT NULL, fecha TEXT NOT NULL, imagen BLOB, nota TEXT, id_mat INTEGER NOT NULL, categoria TEXT NOT NULL, fk_id_mat INTEGER NOT NULL, FOREIGN KEY (fk_id_mat) REFERENCES materias(id_mat), PRIMARY KEY(id_agenda))"
+        )
+
+        for (createQuery in createTableQueries) {
+            db.execSQL(createQuery)
+        }
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        val dropTableQueries = arrayOf(
+            "DROP TABLE IF EXISTS Profesores",
+            "DROP TABLE IF EXISTS profesor_has_materias",
+            "DROP TABLE IF EXISTS materias",
+            "DROP TABLE IF EXISTS Agenda"
+        )
+
+        for (dropQuery in dropTableQueries) {
+            db.execSQL(dropQuery)
+        }
 
         onCreate(db)
     }

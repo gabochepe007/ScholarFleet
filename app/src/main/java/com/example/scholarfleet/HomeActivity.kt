@@ -21,6 +21,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
+    private lateinit var dbHelper: Database
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,10 +50,13 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        //Creación de la bd
-        val admin = Database(this, "agenda", null, 1)
-        //puntero
-        val db = admin.writableDatabase
+        // Aqui se esta creando el objeto del paquete database
+        dbHelper = Database(this)
+
+        // Crear o actualizar la base de datos
+        dbHelper.writableDatabase
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
