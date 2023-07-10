@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="etiqueta">
+        <item name="android:background">
+        @drawable/fondo_eti_fab</item>
+        <item name="android:textColor">#FFFFFF</item>
+
+
+    </style>
+
+
+
+</resources>
+
+
+
