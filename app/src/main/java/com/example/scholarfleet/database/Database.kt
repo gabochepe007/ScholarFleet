@@ -1,14 +1,25 @@
 package com.example.scholarfleet.database
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.scholarfleet.models.Profesor
 
 class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_NAME = "agenda.db"
         private const val DATABASE_VERSION = 1
+        private const val TABLE_NAME_PROFESORES = "Profesores"
+        private const val COLUMN_ID_PROFESOR = "id_prof"
+        private const val COLUMN_NOMBRE_PROFESOR = "nomb_pro"
+        private const val COLUMN_TELEFONO = "Telefono"
+        private const val COLUMN_CORREO = "correo"
+        private const val COLUMN_DIRECCION = "direccion"
+        private const val COLUMN_HORARIO = "horario"
+        private const val COLUMN_FOTO = "foto"
+
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -37,5 +48,20 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         }
 
         onCreate(db)
+    }
+
+    fun insertProfesor(profesor: Profesor) {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            //put(COLUMN_ID_PROFESOR, profesor.id)
+            //put(COLUMN_NOMBRE_PROFESOR, profesor.nombre)
+            //put(COLUMN_TELEFONO, profesor.telefono)
+            //put(COLUMN_CORREO, profesor.correo)
+            //put(COLUMN_DIRECCION, profesor.direccion)
+            //put(COLUMN_HORARIO, profesor.horario)
+            //put(COLUMN_FOTO, profesor.foto)
+        }
+        db.insert(TABLE_NAME_PROFESORES, null, values)
+        db.close()
     }
 }
