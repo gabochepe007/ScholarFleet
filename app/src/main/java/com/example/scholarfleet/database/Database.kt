@@ -4,13 +4,14 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.scholarfleet.models.Profesor
+import com.example.scholarfleet.models.Professor
 
 class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_NAME = "agenda.db"
         private const val DATABASE_VERSION = 1
+        //Tabla profesores
         private const val TABLE_NAME_PROFESORES = "Profesores"
         private const val COLUMN_ID_PROFESOR = "id_prof"
         private const val COLUMN_NOMBRE_PROFESOR = "nomb_pro"
@@ -18,7 +19,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         private const val COLUMN_CORREO = "correo"
         private const val COLUMN_DIRECCION = "direccion"
         private const val COLUMN_HORARIO = "horario"
-        private const val COLUMN_FOTO = "foto"
+        //private const val COLUMN_FOTO = "foto"
 
     }
 
@@ -50,16 +51,16 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         onCreate(db)
     }
 
-    fun insertProfesor(profesor: Profesor) {
+    fun insertProfessor(professor: Professor) {
         val db = writableDatabase
         val values = ContentValues().apply {
-            //put(COLUMN_ID_PROFESOR, profesor.id)
-            //put(COLUMN_NOMBRE_PROFESOR, profesor.nombre)
-            //put(COLUMN_TELEFONO, profesor.telefono)
-            //put(COLUMN_CORREO, profesor.correo)
-            //put(COLUMN_DIRECCION, profesor.direccion)
-            //put(COLUMN_HORARIO, profesor.horario)
-            //put(COLUMN_FOTO, profesor.foto)
+            put(COLUMN_ID_PROFESOR, professor.id)
+            put(COLUMN_NOMBRE_PROFESOR, professor.nombre)
+            put(COLUMN_TELEFONO, professor.telefono)
+            put(COLUMN_CORREO, professor.correo)
+            put(COLUMN_DIRECCION, professor.direccion)
+            put(COLUMN_HORARIO, professor.horario)
+            //put(COLUMN_FOTO, professor.foto)
         }
         db.insert(TABLE_NAME_PROFESORES, null, values)
         db.close()
