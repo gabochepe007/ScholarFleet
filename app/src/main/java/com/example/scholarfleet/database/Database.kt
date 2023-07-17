@@ -2,6 +2,7 @@ package com.example.scholarfleet.database
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.scholarfleet.models.Professor
@@ -49,6 +50,12 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         }
 
         onCreate(db)
+    }
+
+    fun getAllProfessors(): Cursor? {
+        val db = writableDatabase
+        val sql = db.rawQuery("SELECT * FROM profesores", null)
+        return sql
     }
 
     fun insertProfessor(professor: Professor) {

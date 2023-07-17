@@ -34,20 +34,14 @@ class FormularioProFragment : BottomSheetDialogFragment() {
 
     private fun guardarProfesor() {
 
-        val nombreProfesor = binding.etNombreProfesor.text.toString()
-        val telefonoProfesor = binding.etTelefonoProfesor.text.toString()
-        val correoProfesor = binding.etCorreoProfesor.text.toString()
-        val direccionProfesor = binding.etDireccionProfesor.text.toString()
-        val horarioProfesor = binding.etHorarioProfesor.text.toString()
-        // Aquí puedes agregar la lógica para guardar los datos del profesor
-
         val professor = Professor()
-        professor.nombre = nombreProfesor
-        professor.telefono = telefonoProfesor
-        professor.correo = correoProfesor
-        professor.direccion = direccionProfesor
-        professor.horario = horarioProfesor
+        professor.nombre    = binding.etNombreProfesor.text.toString()
+        professor.telefono  = binding.etTelefonoProfesor.text.toString()
+        professor.correo    = binding.etCorreoProfesor.text.toString()
+        professor.direccion = binding.etDireccionProfesor.text.toString()
+        professor.horario   = binding.etHorarioProfesor.text.toString()
 
+       // Aquí puedes agregar la lógica para guardar los datos del profesor
         val database = Database(requireContext())
         database.insertProfessor(professor)
 

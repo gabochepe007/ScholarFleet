@@ -1,10 +1,17 @@
 package com.example.scholarfleet
 
+import ProfesorAdapter
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.scholarfleet.database.Database
+import com.example.scholarfleet.databinding.FragmentProfesorBinding
+import com.example.scholarfleet.models.Professor
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,6 +24,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ProfesorFragment : Fragment() {
+    private lateinit var binding: FragmentProfesorBinding
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,7 +42,26 @@ class ProfesorFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profesor, container, false)
+        binding = FragmentProfesorBinding.inflate(inflater, container, false)
+
+        //recyclerview
+        val recyclerView: RecyclerView = binding.listProfessor
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        //Consulta
+        val database = Database(requireContext())
+        val listaProfesores = database.getAllProfessors()
+
+        //Procesado de consulta
+        val profesores = Professor()
+        val allProfessors = profesores.getAllProfessors(listaProfesores);
+
+        //adapter
+        val adapter = ProfesorAdapter()
+        recyclerView.adapter = adapter
+        adapter.setProfesores(allProfessors)
+
+        return binding.root
     }
 
     companion object {
