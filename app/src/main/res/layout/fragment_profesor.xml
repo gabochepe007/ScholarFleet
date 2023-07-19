@@ -4,19 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profesor.ProfesorFragment">
+    tools:context=".ui.profesor.ProfesorFragment"
+    android:layout_marginBottom="8dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listProfessor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="46dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

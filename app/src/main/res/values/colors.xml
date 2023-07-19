@@ -62,5 +62,18 @@
     <color name="md_theme_dark_surfaceTint">#8DCDFF</color>
     <color name="md_theme_dark_outlineVariant">#41474D</color>
     <color name="md_theme_dark_scrim">#000000</color>
+    <color name="color1">#00BCD4</color>
+    <color name="color2">#FF5722</color>
+    <color name="color3">#8BC34A</color>
+    <color name="color4">#FFC107</color>
+    <color name="color5">#673AB7</color>
+    <color name="color6">#F44336</color>
+    <color name="custom_calendar_text_color">@color/md_theme_light_background</color>
+    <color name="custom_calendar_background_color">@color/md_theme_dark_onSurface</color>
+
+    <color name="calendar_header_color">#FF0000</color>
+    <color name="calendar_weekday_color">#00FF00</color>
+    <color name="calendar_selected_day_color">#0000FF</color>
+
 
 </resources>

@@ -33,7 +33,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val calendarView = findViewById<CalendarView>(R.id.calendarView)
+        val calendarView = findViewById<CalendarView>(R.id.calendarView2)
 
 
 
