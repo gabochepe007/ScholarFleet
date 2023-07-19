@@ -8,11 +8,11 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class Professor {
     var id: Int = getAutoId()
-    var nombre: String =""
-    var telefono: String =""
-    var correo: String =""
-    var direccion: String =""
-    var horario: String =""
+    var nombre: String = ""
+    var telefono: String = ""
+    var correo: String = ""
+    var direccion: String = ""
+    var horario: String = ""
 
     companion object {
         private val idCounter = AtomicInteger(0)
@@ -20,8 +20,6 @@ class Professor {
         fun getAutoId(): Int {
             return idCounter.getAndIncrement()
         }
-
-
     }
 
     @SuppressLint("Range")
@@ -45,8 +43,4 @@ class Professor {
 
         return profesoresList
     }
-
-
-
-
 }

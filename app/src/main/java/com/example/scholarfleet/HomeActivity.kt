@@ -5,8 +5,11 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import android.widget.CalendarView
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,25 +21,34 @@ import com.example.scholarfleet.databinding.ActivityHomeBinding
 import com.google.android.material.navigation.NavigationView
 
 
+
 class HomeActivity : AppCompatActivity(), View.OnClickListener{
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
     private lateinit var dbHelper: Database
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val calendarView = findViewById<CalendarView>(R.id.calendarView)
+
 
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         setSupportActionBar(binding.appBarHome.toolbar)
 
 
         setupFabButtons()
+        binding.appBarHome.backgroundDimmer.setOnClickListener {
+            expandOrCollapseFAB()
 
-
+        }
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -80,6 +92,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
     override fun onClick(view: View?) {
         val tarjetauna = FormularioProFragment()
         val tarjetados = FormularioMatFragment()
+
         when (view?.id) {
             R.id.fab_menu_actions -> {
                 expandOrCollapseFAB()
@@ -94,6 +107,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
                 tarjetauna.show(supportFragmentManager, "FormularioProFragment")
 
             }
+
+
+
+
         }
     }
     private fun showToast(message: String) {
@@ -107,19 +124,27 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
             binding.appBarHome.fabMenuAddAlarmText.visibility = View.GONE
             binding.appBarHome.fabMenuAddPerson.hide()
             binding.appBarHome.fabMenuAddPersonText.visibility = View.GONE
+            binding.appBarHome.backgroundDimmer.visibility = View.GONE
+
+
+
         } else {
             binding.appBarHome.fabMenuActions.extend()
             binding.appBarHome.fabMenuAddAlarm.show()
             binding.appBarHome.fabMenuAddAlarmText.visibility = View.VISIBLE
             binding.appBarHome.fabMenuAddPerson.show()
             binding.appBarHome.fabMenuAddPersonText.visibility = View.VISIBLE
+            binding.appBarHome.backgroundDimmer.visibility = View.VISIBLE
         }
     }
 
-    private fun setupFabButtons() {
+        private fun setupFabButtons() {
         binding.appBarHome.fabMenuActions.shrink()
         binding.appBarHome.fabMenuActions.setOnClickListener(this)
         binding.appBarHome.fabMenuAddAlarm.setOnClickListener(this)
         binding.appBarHome.fabMenuAddPerson.setOnClickListener(this)
     }
+
+
+
 }

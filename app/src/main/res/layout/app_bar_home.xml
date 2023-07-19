@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
@@ -7,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
-
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,9 +17,7 @@
         app:layout_constraintBottom_toTopOf="@+id/include"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <include
         android:id="@+id/include"
@@ -32,6 +28,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+        <View
+        android:id="@+id/background_dimmer"
+        android:visibility="gone"
+        android:background="#2B0797DB"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_menu_actions"
@@ -60,7 +64,7 @@
         app:layout_constraintBottom_toTopOf="@+id/fab_menu_actions"
         app:layout_constraintEnd_toEndOf="@+id/fab_menu_actions"
         app:srcCompat="@drawable/baseline_book_24"
-        app:tint="@color/md_theme_dark_secondaryContainer"/>
+        app:tint="@color/md_theme_dark_secondaryContainer" />
 
     <TextView
         android:id="@+id/fab_menu_add_alarm_text"
@@ -87,7 +91,7 @@
         app:layout_constraintEnd_toEndOf="@+id/fab_menu_add_alarm"
         app:layout_constraintStart_toStartOf="@+id/fab_menu_add_alarm"
         app:srcCompat="@drawable/baseline_book_24"
-        app:tint="@color/md_theme_light_tertiary"/>
+        app:tint="@color/md_theme_light_tertiary" />
 
     <TextView
         android:id="@+id/fab_menu_add_person_text"
