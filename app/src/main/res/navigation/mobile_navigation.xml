@@ -22,4 +22,10 @@
         android:name="com.example.scholarfleet.ProfesorFragment"
         android:label="Profesores"
         tools:layout="@layout/fragment_profesor" />
+
+    <fragment
+        android:id="@+id/materiaFragment"
+        android:name="com.example.scholarfleet.ui.materia.MateriaFragment"
+        android:label="Materias"
+        tools:layout="@layout/fragment_materia" />
 </navigation>

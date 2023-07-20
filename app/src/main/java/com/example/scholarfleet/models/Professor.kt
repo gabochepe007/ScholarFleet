@@ -2,8 +2,6 @@ package com.example.scholarfleet.models
 
 import android.annotation.SuppressLint
 import android.database.Cursor
-import androidx.core.content.ContentProviderCompat.requireContext
-import com.example.scholarfleet.database.Database
 import java.util.concurrent.atomic.AtomicInteger
 
 class Professor {
@@ -15,7 +13,7 @@ class Professor {
     var horario: String = ""
 
     companion object {
-        private val idCounter = AtomicInteger(0)
+        private val idCounter = AtomicInteger(1)
 
         fun getAutoId(): Int {
             return idCounter.getAndIncrement()

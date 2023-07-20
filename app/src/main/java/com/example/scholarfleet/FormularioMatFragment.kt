@@ -1,23 +1,125 @@
 package com.example.scholarfleet
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.Toast
+import com.example.scholarfleet.database.Database
+import com.example.scholarfleet.databinding.FormulariomatFragmentBinding
+import com.example.scholarfleet.models.Materia
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class FormularioMatFragment : BottomSheetDialogFragment() {
+    private lateinit var binding: FormulariomatFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.formulariomat_fragment,container,false)
+        binding = FormulariomatFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+        //return inflater.inflate(R.layout.formulariomat_fragment,container,false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        binding.salom.inputType = InputType.TYPE_CLASS_NUMBER
+        binding.salom.keyListener = null
+        binding.salom.setRawInputType(InputType.TYPE_CLASS_NUMBER)
+        binding.salom.setTextIsSelectable(true)
+
+        binding.salom.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.salom.inputType = InputType.TYPE_CLASS_NUMBER
+                binding.salom.setTextIsSelectable(true)
+            }
+        }
+
+        binding.salom.setOnClickListener {
+            binding.salom.inputType = InputType.TYPE_CLASS_NUMBER
+            binding.salom.setTextIsSelectable(true)
+        }
+
+        binding.salom.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                binding.salom.clearFocus()
+            }
+            false
+        }
+
+        binding.btnHora.setOnClickListener{
+            val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+            val currentMinute = Calendar.getInstance().get(Calendar.MINUTE)
+
+            val picker = MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_12H)
+                .setHour(currentHour)
+                .setMinute(currentMinute)
+                .build()
+
+            picker.addOnPositiveButtonClickListener {
+                val hour = picker.hour
+                val minute = picker.minute
+
+                val selectedTime = formatTime(hour, minute)
+                binding.horario.setText(selectedTime)
+            }
+
+            picker.show(parentFragmentManager, "TimePicker")
+        }
+
+        binding.btguardar.setOnClickListener {
+            if(validarCampos()){
+                guardarMateria()
+            }
+        }
+    }
+    private fun formatTime(hour: Int, minute: Int): String {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        calendar.set(Calendar.MINUTE, minute)
+
+        val format = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        return format.format(calendar.time)
+    }
+    private fun validarCampos(): Boolean {
+        val nombre = binding.nombrem.text.toString()
+        val aula = binding.salom.text.toString()
+        val edificio = binding.edificiom.text.toString()
+        val horario = binding.horario.text.toString()
+
+        if(nombre.isEmpty() || aula.isEmpty() || edificio.isEmpty() || horario.isEmpty()){
+            Toast.makeText(requireContext(), "Todos los campos son requeridos", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
+    }
+
+    private fun guardarMateria() {
+        val materia = Materia()
+        materia.nombre = binding.nombrem.text.toString()
+        materia.salon = binding.salom.text.toString()
+        materia.edificio = binding.edificiom.text.toString()
+        materia.horario = binding.horario.text.toString()
+
+        val database = Database(requireContext())
+        database.insertMateria(materia)
+
+        Toast.makeText(requireContext(), "Datos de la materia guardados", Toast.LENGTH_SHORT).show()
+
+        dismiss()
     }
 
 }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.scholarfleet.models.Materia
 import com.example.scholarfleet.models.Professor
 
 class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -21,6 +22,16 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         private const val COLUMN_DIRECCION = "direccion"
         private const val COLUMN_HORARIO = "horario"
         //private const val COLUMN_FOTO = "foto"
+
+        //Tabla materia
+        private const val TABLE_NAME_MATERIA = "Materias"
+        private const val COLUMN_ID_MATERIA = "id_mat"
+        private const val COLUMN_NOMBRE_MATERIA = "nombre"
+        private const val COLUMN_EDIFICIO_MATERIA = "edificio"
+        private const val COLUMN_AULA_MATERIA = "aula"
+        private const val COLUMN_HORARIO_MATERIA = "horario"
+        private const val COLUMN_NOTA_MATERIA = "nota"
+
 
     }
 
@@ -54,7 +65,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     fun getAllProfessors(): Cursor? {
         val db = writableDatabase
-        val sql = db.rawQuery("SELECT * FROM profesores", null)
+        val sql = db.rawQuery("SELECT * FROM profesores ORDER BY nomb_pro ASC", null)
         return sql
     }
 
@@ -70,6 +81,27 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             //put(COLUMN_FOTO, professor.foto)
         }
         db.insert(TABLE_NAME_PROFESORES, null, values)
+        db.close()
+    }
+
+    fun getAllMaterias(): Cursor? {
+        val db = writableDatabase
+        val sql = db.rawQuery("SELECT * FROM materias ORDER BY nombre ASC", null)
+        return sql
+    }
+
+    fun insertMateria(materia: Materia){
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put(COLUMN_ID_MATERIA, materia.id)
+            put(COLUMN_NOMBRE_MATERIA, materia.nombre)
+            //put(COLUMN_EDIFICIO_MATERIA, materia.edificio)
+            put(COLUMN_AULA_MATERIA, materia.salon)
+            put(COLUMN_HORARIO_MATERIA, materia.horario)
+            //put(COLUMN_NOTA_MATERIA, materia.nota)
+
+        }
+        db.insert(TABLE_NAME_MATERIA, null, values)
         db.close()
     }
 }

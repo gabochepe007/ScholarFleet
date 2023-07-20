@@ -18,5 +18,11 @@
             android:id="@+id/profesorFragment"
             android:icon="@drawable/baseline_self_improvement_24"
             android:title="@string/profesor_label" />
+
+        <item
+            android:id="@+id/materiaFragment"
+            android:icon="@drawable/baseline_self_improvement_24"
+            android:title="Materias" />
+
     </group>
 </menu>
