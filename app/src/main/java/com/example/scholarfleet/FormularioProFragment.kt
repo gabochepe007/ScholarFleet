@@ -20,7 +20,6 @@ class FormularioProFragment : BottomSheetDialogFragment() {
     ): View? {
         binding = FormularioproFragmentBinding.inflate(inflater, container, false)
         return binding.root
-        //return inflater.inflate(R.layout.formulariopro_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
