@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_home, container, false)
 
         // Obtiene las referencias a los elementos del layout
-        textDiaM = rootView.findViewById(R.id.textDiaM)
+       // textDiaM = rootView.findViewById(R.id.textDiaM)
         recyclerView = rootView.findViewById(R.id.recyclerView)
 
         // Configura el RecyclerView y su adaptador
@@ -38,7 +38,7 @@ class HomeFragment : Fragment() {
         val currentDate = Calendar.getInstance().time
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val formattedDate = dateFormat.format(currentDate)
-        textDiaM.text = formattedDate
+      //  textDiaM.text = formattedDate
 
         return rootView
     }
