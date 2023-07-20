@@ -1,15 +1,12 @@
 package com.example.scholarfleet
 
 import FormularioProFragment
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.CalendarView
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -33,7 +30,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val calendarView = findViewById<CalendarView>(R.id.calendarView2)
+
 
 
 
@@ -68,6 +65,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
 
         // Crear o actualizar la base de datos
         dbHelper.writableDatabase
+
+
 
 
     }

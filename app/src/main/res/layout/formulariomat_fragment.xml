@@ -90,7 +90,7 @@
                 android:layout_width="134dp"
                 android:layout_height="56dp"
                 android:layout_weight="1"
-                android:clickable="true"
+                android:editable="false"
                 android:hint="Horario" />
 
             <Button

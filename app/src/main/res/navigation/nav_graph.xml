@@ -2,27 +2,30 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.scholarfleet.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        android:id="@+id/nav_home"
+        android:name="com.example.scholarfleet.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
 
-        <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-    </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.scholarfleet.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        android:id="@+id/agendaFragment"
+        android:name="com.example.scholarfleet.ui.agenda.AgendaFragment"
+        android:label="@string/agenda_label"
+        tools:layout="@layout/fragment_agenda_layout" />
 
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
+    <fragment
+        android:id="@+id/profesorFragment"
+        android:name="com.example.scholarfleet.ProfesorFragment"
+        android:label="Profesores"
+        tools:layout="@layout/fragment_profesor" />
+
+    <fragment
+        android:id="@+id/materiaFragment"
+        android:name="com.example.scholarfleet.ui.materia.MateriaFragment"
+        android:label="Materias"
+        tools:layout="@layout/fragment_materia" />
 </navigation>

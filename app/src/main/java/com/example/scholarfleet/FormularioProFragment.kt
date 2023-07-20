@@ -146,7 +146,7 @@ class FormularioProFragment : BottomSheetDialogFragment() {
         database.insertProfessor(professor)
 
         Toast.makeText(requireContext(), "Datos del profesor guardados", Toast.LENGTH_SHORT).show()
-
+        
         dismiss()
     }
 }
