@@ -91,6 +91,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
     override fun onClick(view: View?) {
         val tarjetauna = FormularioProFragment()
         val tarjetados = FormularioMatFragment()
+        val tarjetatres = FormularioEventFragment()
 
         when (view?.id) {
             R.id.fab_menu_actions -> {
@@ -107,6 +108,11 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
 
             }
 
+            R.id.fab_menu_add_event->{
+                expandOrCollapseFAB()
+                tarjetatres.show(supportFragmentManager, "FormularioEventFragment")
+            }
+
 
 
 
@@ -119,29 +125,42 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
     private fun expandOrCollapseFAB() {
         if (binding.appBarHome.fabMenuActions.isExtended) {
             binding.appBarHome.fabMenuActions.shrink()
+
             binding.appBarHome.fabMenuAddAlarm.hide()
             binding.appBarHome.fabMenuAddAlarmText.visibility = View.GONE
+
             binding.appBarHome.fabMenuAddPerson.hide()
             binding.appBarHome.fabMenuAddPersonText.visibility = View.GONE
+
+            binding.appBarHome.fabMenuAddEvent.hide()
+            binding.appBarHome.fabMenuAddEventText.visibility = View.GONE
+
             binding.appBarHome.backgroundDimmer.visibility = View.GONE
 
 
 
         } else {
             binding.appBarHome.fabMenuActions.extend()
+
             binding.appBarHome.fabMenuAddAlarm.show()
             binding.appBarHome.fabMenuAddAlarmText.visibility = View.VISIBLE
+
             binding.appBarHome.fabMenuAddPerson.show()
             binding.appBarHome.fabMenuAddPersonText.visibility = View.VISIBLE
+
+            binding.appBarHome.fabMenuAddEvent.show()
+            binding.appBarHome.fabMenuAddEventText.visibility = View.VISIBLE
+
             binding.appBarHome.backgroundDimmer.visibility = View.VISIBLE
         }
     }
 
-        private fun setupFabButtons() {
+    private fun setupFabButtons() {
         binding.appBarHome.fabMenuActions.shrink()
         binding.appBarHome.fabMenuActions.setOnClickListener(this)
         binding.appBarHome.fabMenuAddAlarm.setOnClickListener(this)
         binding.appBarHome.fabMenuAddPerson.setOnClickListener(this)
+        binding.appBarHome.fabMenuAddEvent.setOnClickListener(this)
     }
 
 

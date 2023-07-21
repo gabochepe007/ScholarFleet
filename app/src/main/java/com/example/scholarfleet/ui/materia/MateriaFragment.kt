@@ -45,10 +45,7 @@ class MateriaFragment : Fragment() {
         //val galleryViewModel = ViewModelProvider(this).get(MateriaViewModel::class.java)
 
         _binding = FragmentMateriaBinding.inflate(inflater, container, false)
-        //val root: View = binding.root
 
-        //galleryViewModel.text.observe(viewLifecycleOwner) {        }
-        //return root
 
         val recyclerView: RecyclerView = binding.listMateria
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

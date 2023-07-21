@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.scholarfleet.models.Agenda
 import com.example.scholarfleet.models.Materia
 import com.example.scholarfleet.models.Professor
 
@@ -31,6 +32,16 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         private const val COLUMN_AULA_MATERIA = "aula"
         private const val COLUMN_HORARIO_MATERIA = "horario"
         private const val COLUMN_NOTA_MATERIA = "nota"
+
+        //Tabla agenda
+        private const val TABLE_NAME_AGENDA = "Agenda"
+        private const val COLUMN_ID_AGENDA = "id_agenda"
+        private const val COLUMN_NOMBRE_AGENDA = "nombre"
+        private const val COLUMN_FECHA_AGENDA = "fecha"
+        private const val COLUMN_NOTA_AGENDA = "nota"
+        private const val COLUMN_MATERIA_AGENDA = "id_mat"
+        private const val COLUMN_MATERIA_FK_AGENDA = "fk_id_mat"
+        private const val COLUMN_CATEGORIA_AGENDA = "categoria"
 
 
     }
@@ -65,7 +76,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     fun getAllProfessors(): Cursor? {
         val db = writableDatabase
-        val sql = db.rawQuery("SELECT * FROM profesores ORDER BY nomb_pro ASC", null)
+        val sql = db.rawQuery("SELECT * FROM profesores ORDER BY UPPER(TRIM(nomb_pro)) ASC", null)
         return sql
     }
 
@@ -86,7 +97,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     fun getAllMaterias(): Cursor? {
         val db = writableDatabase
-        val sql = db.rawQuery("SELECT * FROM materias ORDER BY nombre ASC", null)
+        val sql = db.rawQuery("SELECT * FROM materias ORDER BY UPPER(TRIM(nombre)) ASC", null)
         return sql
     }
 
@@ -102,6 +113,26 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
         }
         db.insert(TABLE_NAME_MATERIA, null, values)
+        db.close()
+    }
+
+    fun getAllEvents(): Cursor? {
+        val db = writableDatabase
+        val sql = db.rawQuery("SELECT * FROM Agenda ORDER BY UPPER(TRIM(nombre)) ASC", null)
+        return sql
+    }
+    fun insertEvento(agenda: Agenda){
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put(COLUMN_ID_AGENDA, agenda.id)
+            put(COLUMN_NOMBRE_AGENDA, agenda.nombre)
+            put(COLUMN_FECHA_AGENDA, agenda.fecha)
+            put(COLUMN_NOTA_AGENDA, agenda.nota)
+            put(COLUMN_MATERIA_AGENDA, agenda.id_mat)
+            put(COLUMN_MATERIA_FK_AGENDA, agenda.id_mat)
+            put(COLUMN_CATEGORIA_AGENDA, agenda.categoria)
+        }
+        db.insert(TABLE_NAME_AGENDA, null, values)
         db.close()
     }
 }
