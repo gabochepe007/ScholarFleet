@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="8dp"
+    android:background="#E2F3F8"
     tools:context=".ui.materia.MateriaFragment">
 
     <androidx.recyclerview.widget.RecyclerView
