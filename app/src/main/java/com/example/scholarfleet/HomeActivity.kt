@@ -122,7 +122,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
         Toast.makeText(baseContext, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun expandOrCollapseFAB() {
+    fun expandOrCollapseFAB() {
         if (binding.appBarHome.fabMenuActions.isExtended) {
             binding.appBarHome.fabMenuActions.shrink()
 

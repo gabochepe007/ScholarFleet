@@ -11,11 +11,11 @@ import com.example.scholarfleet.database.Database
 import com.example.scholarfleet.databinding.FormulariomatFragmentBinding
 import com.example.scholarfleet.models.Materia
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
+import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.util.TimeZone
 
 class FormularioMatFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FormulariomatFragmentBinding
@@ -27,12 +27,10 @@ class FormularioMatFragment : BottomSheetDialogFragment() {
     ): View? {
         binding = FormulariomatFragmentBinding.inflate(inflater, container, false)
         return binding.root
-        //return inflater.inflate(R.layout.formulariomat_fragment,container,false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         binding.salom.inputType = InputType.TYPE_CLASS_NUMBER
         binding.salom.keyListener = null
@@ -58,48 +56,50 @@ class FormularioMatFragment : BottomSheetDialogFragment() {
             false
         }
 
-        binding.btnHora.setOnClickListener{
-            val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-            val currentMinute = Calendar.getInstance().get(Calendar.MINUTE)
-
-            val picker = MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_12H)
-                .setHour(currentHour)
-                .setMinute(currentMinute)
-                .build()
-
-            picker.addOnPositiveButtonClickListener {
-                val hour = picker.hour
-                val minute = picker.minute
-
-                val selectedTime = formatTime(hour, minute)
-                binding.horario.setText(selectedTime)
-            }
-
-            picker.show(parentFragmentManager, "TimePicker")
-        }
-
         binding.btguardar.setOnClickListener {
-            if(validarCampos()){
+            if (validarCampos()) {
                 guardarMateria()
             }
         }
-    }
-    private fun formatTime(hour: Int, minute: Int): String {
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, hour)
-        calendar.set(Calendar.MINUTE, minute)
 
-        val format = SimpleDateFormat("hh:mm a", Locale.getDefault())
-        return format.format(calendar.time)
+        binding.btnHora.setOnClickListener {
+            showDatePicker()
+        }
     }
+
+    private fun showDatePicker() {
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Select Date")
+            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+            .build()
+
+        val timeZoneGMTMinus6 = TimeZone.getTimeZone("GMT-6")
+
+        datePicker.addOnPositiveButtonClickListener { selection ->
+            val calendar = Calendar.getInstance(timeZoneGMTMinus6)
+            calendar.timeInMillis = selection
+
+            val format = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+            format.timeZone = timeZoneGMTMinus6
+
+            val selectedDate = format.format(calendar.time)
+            binding.horario.setText(selectedDate)
+        }
+
+        datePicker.show(parentFragmentManager, "DatePicker")
+    }
+
+
+
+
+
     private fun validarCampos(): Boolean {
         val nombre = binding.nombrem.text.toString()
         val aula = binding.salom.text.toString()
         val edificio = binding.edificiom.text.toString()
         val horario = binding.horario.text.toString()
 
-        if(nombre.isEmpty() || aula.isEmpty() || edificio.isEmpty() || horario.isEmpty()){
+        if (nombre.isEmpty() || aula.isEmpty() || edificio.isEmpty() || horario.isEmpty()) {
             Toast.makeText(requireContext(), "Todos los campos son requeridos", Toast.LENGTH_SHORT).show()
             return false
         }
@@ -121,5 +121,4 @@ class FormularioMatFragment : BottomSheetDialogFragment() {
 
         dismiss()
     }
-
 }

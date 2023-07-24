@@ -1,14 +1,19 @@
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.scholarfleet.HomeActivity
 import com.example.scholarfleet.R
+import com.example.scholarfleet.database.Database
 import java.text.SimpleDateFormat
 import java.util.*
 
 class HomeAdapter(private val data: List<String>) :
+
     RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_home, parent, false)
@@ -25,6 +30,7 @@ class HomeAdapter(private val data: List<String>) :
         private val nombreTextView: TextView = itemView.findViewById(R.id.nombreTextView)
         private val fechaTextView: TextView = itemView.findViewById(R.id.idfecha)
         private val infoTextView: TextView = itemView.findViewById(R.id.infoTextView)
+        private val boton: Button = itemView.findViewById(R.id.boton)
 
         fun bind(nombreMateria: String, position: Int) {
             nombreTextView.text = nombreMateria
@@ -56,6 +62,13 @@ class HomeAdapter(private val data: List<String>) :
                 else -> getDayText(formattedTomorrowDate)
             }
             infoTextView.text = dayText
+
+            //
+            boton.setOnClickListener {
+
+
+
+            }
         }
 
         private fun getDayText(dateString: String): String {
