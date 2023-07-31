@@ -5,9 +5,12 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.example.scholarfleet.models.Agenda
 import com.example.scholarfleet.models.Materia
 import com.example.scholarfleet.models.Professor
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -72,6 +75,37 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         }
 
         onCreate(db)
+    }
+
+    fun getNextWeek():Cursor{
+
+        val sentencia = """
+            SELECT *
+            FROM materias
+            WHERE date(substr(horario, 7) || '-' ||
+                   CASE substr(horario, 4, 3)
+                       WHEN 'enero' THEN '01'
+                       WHEN 'febrero' THEN '02'
+                       WHEN 'marzo' THEN '03'
+                       WHEN 'abril' THEN '04'
+                       WHEN 'mayo' THEN '05'
+                       WHEN 'junio' THEN '06'
+                       WHEN 'julio' THEN '07'
+                       WHEN 'agosto' THEN '08'
+                       WHEN 'septiembre' THEN '09'
+                       WHEN 'octubre' THEN '10'
+                       WHEN 'noviembre' THEN '11'
+                       WHEN 'diciembre' THEN '12'
+                   END || '-' ||
+                   substr(horario, -4)) BETWEEN date('now') AND date('now', '+1 day')
+        """.trimIndent()
+        Log.d("Consulta SQL:", sentencia)
+
+        val db = writableDatabase
+
+        val sql = db.rawQuery(sentencia, null)
+
+        return sql
     }
 
     fun getAllProfessors(): Cursor? {

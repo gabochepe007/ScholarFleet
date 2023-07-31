@@ -1,12 +1,12 @@
+package com.example.scholarfleet.partials
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.scholarfleet.HomeActivity
 import com.example.scholarfleet.R
-import com.example.scholarfleet.database.Database
 import java.text.SimpleDateFormat
 import java.util.*
 

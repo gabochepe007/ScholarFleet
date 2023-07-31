@@ -1,17 +1,19 @@
 package com.example.scholarfleet.ui.home
 
-import HomeAdapter
+import android.annotation.SuppressLint
+import com.example.scholarfleet.partials.HomeAdapter
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scholarfleet.R
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.scholarfleet.database.Database
 
 class HomeFragment : Fragment() {
 
@@ -19,6 +21,7 @@ class HomeFragment : Fragment() {
     private lateinit var textFecha: TextView
     private lateinit var recyclerView: RecyclerView
 
+    @SuppressLint("Range")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,6 +42,25 @@ class HomeFragment : Fragment() {
       //  val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
      //   val formattedDate = dateFormat.format(currentDate)
     //    textFecha.text = formattedDate
+
+        val database = Database(requireContext())
+        val listaMaterias = database.getNextWeek()
+
+        if (listaMaterias != null && listaMaterias.moveToFirst()) {
+            // Iterar a través del Cursor y mostrar los resultados en el Logcat
+            do {
+                val nombreMateria = listaMaterias.getString(listaMaterias.getColumnIndex("nombre"))
+                val fechaMateria = listaMaterias.getString(listaMaterias.getColumnIndex("horario"))
+
+                Log.i("Consulta - Nombre Materia:", nombreMateria)
+                Log.i("Consulta - Fecha:", fechaMateria)
+            } while (listaMaterias.moveToNext())
+
+            // Importante cerrar el Cursor una vez que hayamos terminado con él
+            listaMaterias.close()
+        } else {
+            Log.i("Consulta:", "El Cursor es nulo o no tiene resultados")
+        }
 
         return rootView
     }
