@@ -16,6 +16,12 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
+import org.threeten.bp.Instant
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneId
+import org.threeten.bp.ZoneOffset
+import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.format.FormatStyle
 
 class FormularioMatFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FormulariomatFragmentBinding
@@ -67,27 +73,23 @@ class FormularioMatFragment : BottomSheetDialogFragment() {
         }
     }
 
+
     private fun showDatePicker() {
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setTitleText("Select Date")
             .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
             .build()
 
-        val timeZoneGMTMinus6 = TimeZone.getTimeZone("GMT-6")
-
         datePicker.addOnPositiveButtonClickListener { selection ->
-            val calendar = Calendar.getInstance(timeZoneGMTMinus6)
-            calendar.timeInMillis = selection
-
-            val format = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-            format.timeZone = timeZoneGMTMinus6
-
-            val selectedDate = format.format(calendar.time)
+            val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val selectedDate = format.format(selection)
             binding.horario.setText(selectedDate)
         }
 
         datePicker.show(parentFragmentManager, "DatePicker")
     }
+
+
 
 
 
