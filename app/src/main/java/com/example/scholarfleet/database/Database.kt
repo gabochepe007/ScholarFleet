@@ -81,23 +81,10 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
         val sentencia = """
             SELECT *
-            FROM materias
-            WHERE date(substr(horario, 7) || '-' ||
-                   CASE substr(horario, 4, 3)
-                       WHEN 'enero' THEN '01'
-                       WHEN 'febrero' THEN '02'
-                       WHEN 'marzo' THEN '03'
-                       WHEN 'abril' THEN '04'
-                       WHEN 'mayo' THEN '05'
-                       WHEN 'junio' THEN '06'
-                       WHEN 'julio' THEN '07'
-                       WHEN 'agosto' THEN '08'
-                       WHEN 'septiembre' THEN '09'
-                       WHEN 'octubre' THEN '10'
-                       WHEN 'noviembre' THEN '11'
-                       WHEN 'diciembre' THEN '12'
-                   END || '-' ||
-                   substr(horario, -4)) BETWEEN date('now') AND date('now', '+1 day')
+        FROM materias
+        WHERE strftime('%Y-%m-%d', substr(horario, -4) || '-' ||
+                       substr(horario, 4, 2) || '-' ||
+                       substr(horario, 1, 2)) BETWEEN date('now') AND date('now', '+1 day')
         """.trimIndent()
         Log.d("Consulta SQL:", sentencia)
 
