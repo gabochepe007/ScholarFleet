@@ -126,7 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="Evento"
-        android:textColor="@color/md_theme_light_surfaceTint"
+        android:textColor="#1F97CF"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/fab_menu_add_event"
         app:layout_constraintEnd_toStartOf="@+id/fab_menu_add_event"
