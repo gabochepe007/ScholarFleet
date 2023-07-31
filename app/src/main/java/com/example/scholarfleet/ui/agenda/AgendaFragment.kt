@@ -13,7 +13,6 @@ import com.example.scholarfleet.database.Database
 import com.example.scholarfleet.databinding.FragmentAgendaLayoutBinding
 import com.example.scholarfleet.models.Agenda
 import com.example.scholarfleet.partials.EventoAdapter
-import com.example.scholarfleet.ui.agenda.AgendaFragment
 
 
 private const val ARG_PARAM1 = "param1"

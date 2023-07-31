@@ -1,8 +1,6 @@
 package com.example.scholarfleet.ui.materia
 
-import ProfesorAdapter
 import android.graphics.Rect
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater

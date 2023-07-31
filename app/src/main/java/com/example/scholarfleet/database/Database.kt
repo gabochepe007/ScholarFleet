@@ -77,15 +77,33 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         onCreate(db)
     }
 
+    fun getMaxIdFromDatabaseMat(): Int {
+        val db = writableDatabase
+        val query = "SELECT MAX(id_mat) FROM materias;"
+        val cursor = db.rawQuery(query, null)
+        cursor.moveToFirst()
+        val maxId = cursor.getInt(0)
+        cursor.close()
+        return maxId
+    }
+
+    fun getMaxIdFromDatabaseAgenda(): Int {
+        val db = writableDatabase
+        val query = "SELECT MAX(id_mat) FROM Agenda;"
+        val cursor = db.rawQuery(query, null)
+        cursor.moveToFirst()
+        val maxId = cursor.getInt(0)
+        cursor.close()
+        return maxId
+    }
+
     fun getNextWeek():Cursor{
 
         val sentencia = """
-            SELECT *
-        FROM materias
-        WHERE strftime('%Y-%m-%d', substr(horario, -4) || '-' ||
-                       substr(horario, 4, 2) || '-' ||
-                       substr(horario, 1, 2)) BETWEEN date('now') AND date('now', '+1 day')
+             SELECT * FROM materias WHERE horario
+             BETWEEN date('now') AND date('now', '+1 day')
         """.trimIndent()
+
         Log.d("Consulta SQL:", sentencia)
 
         val db = writableDatabase

@@ -10,18 +10,12 @@ import android.widget.Toast
 import com.example.scholarfleet.database.Database
 import com.example.scholarfleet.databinding.FormulariomatFragmentBinding
 import com.example.scholarfleet.models.Materia
+import com.example.scholarfleet.partials.convertirFecha
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
-import org.threeten.bp.Instant
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.ZoneId
-import org.threeten.bp.ZoneOffset
-import org.threeten.bp.format.DateTimeFormatter
-import org.threeten.bp.format.FormatStyle
 
 class FormularioMatFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FormulariomatFragmentBinding
@@ -82,6 +76,7 @@ class FormularioMatFragment : BottomSheetDialogFragment() {
 
         datePicker.addOnPositiveButtonClickListener { selection ->
             val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            format.timeZone = TimeZone.getTimeZone("UTC") // Establecer la zona horaria a UTC
             val selectedDate = format.format(selection)
             binding.horario.setText(selectedDate)
         }
@@ -114,7 +109,7 @@ class FormularioMatFragment : BottomSheetDialogFragment() {
         materia.nombre = binding.nombrem.text.toString()
         materia.salon = binding.salom.text.toString()
         materia.edificio = binding.edificiom.text.toString()
-        materia.horario = binding.horario.text.toString()
+        materia.horario = convertirFecha(binding.horario.text.toString())
 
         val database = Database(requireContext())
         database.insertMateria(materia)

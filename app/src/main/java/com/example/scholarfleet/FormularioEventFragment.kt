@@ -2,7 +2,6 @@ package com.example.scholarfleet
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +10,12 @@ import android.widget.Toast
 import com.example.scholarfleet.database.Database
 import com.example.scholarfleet.databinding.FragmentFormularioEventBinding
 import com.example.scholarfleet.models.Agenda
+import com.example.scholarfleet.partials.convertirFecha
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.util.TimeZone
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -82,7 +83,8 @@ class FormularioEventFragment : BottomSheetDialogFragment() {
     private fun guardarEvento(){
         val evento = Agenda()
         evento.nombre = binding.nombre.text.toString()
-        evento.fecha = binding.fecha.text.toString()
+
+        evento.fecha = convertirFecha(binding.fecha.text.toString())
         evento.nota = binding.nota.text.toString()
         evento.categoria = binding.categoria.text.toString()
 
@@ -108,7 +110,11 @@ class FormularioEventFragment : BottomSheetDialogFragment() {
             val selectedDate = Calendar.getInstance()
             selectedDate.set(selectedYear, selectedMonth, selectedDayOfMonth)
 
+            val timeZone = TimeZone.getTimeZone("America/Mexico_City")
+
             val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            dateFormat.timeZone = timeZone
+
             val formattedDate = dateFormat.format(selectedDate.time)
 
             binding.fecha.setText(formattedDate)

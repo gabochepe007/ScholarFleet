@@ -6,7 +6,6 @@ import android.widget.Button
 import android.widget.Toast
 import android.text.InputType
 import android.view.inputmethod.EditorInfo
-import com.example.scholarfleet.R
 import com.example.scholarfleet.database.Database
 import com.example.scholarfleet.databinding.FormularioproFragmentBinding
 import com.example.scholarfleet.models.Professor
