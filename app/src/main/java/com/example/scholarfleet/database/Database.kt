@@ -77,24 +77,14 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         onCreate(db)
     }
 
-    fun getMaxIdFromDatabaseMat(): Int {
+    fun getMaxIdFromDatabase(tableName: String, campo: String): Int {
         val db = writableDatabase
-        val query = "SELECT MAX(id_mat) FROM materias;"
+        val query = "SELECT MAX($campo) FROM $tableName;"
         val cursor = db.rawQuery(query, null)
         cursor.moveToFirst()
         val maxId = cursor.getInt(0)
         cursor.close()
-        return maxId
-    }
-
-    fun getMaxIdFromDatabaseAgenda(): Int {
-        val db = writableDatabase
-        val query = "SELECT MAX(id_mat) FROM Agenda;"
-        val cursor = db.rawQuery(query, null)
-        cursor.moveToFirst()
-        val maxId = cursor.getInt(0)
-        cursor.close()
-        return maxId
+        return maxId + 1
     }
 
     fun getNextWeek():Cursor{
@@ -122,7 +112,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     fun insertProfessor(professor: Professor) {
         val db = writableDatabase
         val values = ContentValues().apply {
-            put(COLUMN_ID_PROFESOR, professor.id)
+            put(COLUMN_ID_PROFESOR, getMaxIdFromDatabase(TABLE_NAME_PROFESORES, COLUMN_ID_PROFESOR))
             put(COLUMN_NOMBRE_PROFESOR, professor.nombre)
             put(COLUMN_TELEFONO, professor.telefono)
             put(COLUMN_CORREO, professor.correo)
@@ -143,7 +133,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     fun insertMateria(materia: Materia){
         val db = writableDatabase
         val values = ContentValues().apply {
-            put(COLUMN_ID_MATERIA, materia.id)
+            put(COLUMN_ID_MATERIA, getMaxIdFromDatabase(TABLE_NAME_MATERIA, COLUMN_ID_MATERIA))
             put(COLUMN_NOMBRE_MATERIA, materia.nombre)
             //put(COLUMN_EDIFICIO_MATERIA, materia.edificio)
             put(COLUMN_AULA_MATERIA, materia.salon)
@@ -163,7 +153,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     fun insertEvento(agenda: Agenda){
         val db = writableDatabase
         val values = ContentValues().apply {
-            put(COLUMN_ID_AGENDA, agenda.id)
+            put(COLUMN_ID_AGENDA, getMaxIdFromDatabase(TABLE_NAME_AGENDA, COLUMN_ID_AGENDA))
             put(COLUMN_NOMBRE_AGENDA, agenda.nombre)
             put(COLUMN_FECHA_AGENDA, agenda.fecha)
             put(COLUMN_NOTA_AGENDA, agenda.nota)
