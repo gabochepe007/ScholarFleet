@@ -87,14 +87,13 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return maxId + 1
     }
 
-    fun getNextWeek():Cursor{
+    fun getNextWeek(dia: String):Cursor{
 
-        val sentencia = """
-             SELECT * FROM materias WHERE horario
-             BETWEEN date('now') AND date('now', '+1 day')
-        """.trimIndent()
-
-        Log.d("Consulta SQL:", sentencia)
+        val sentencia: String = when (dia) {
+            "today" -> "SELECT * FROM materias WHERE date(horario) BETWEEN date('now') AND date('now', '+1 day') ORDER BY horario ASC;"
+            "week" -> "SELECT * FROM materias WHERE date(horario) BETWEEN date('now', '+1 day') AND date('now', '+7 day') ORDER BY horario ASC;"
+            else -> "SELECT * FROM materias WHERE date(horario) BETWEEN date('now') AND date('now', '+7 day') ORDER BY horario ASC;"
+        }
 
         val db = writableDatabase
 

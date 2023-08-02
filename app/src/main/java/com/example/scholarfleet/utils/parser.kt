@@ -1,4 +1,4 @@
-package com.example.scholarfleet.partials
+package com.example.scholarfleet.utils
 
 fun convertirFecha(fechaOriginal: String): String {
     val partes = fechaOriginal.split("/")

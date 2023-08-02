@@ -10,7 +10,7 @@ import android.widget.Toast
 import com.example.scholarfleet.database.Database
 import com.example.scholarfleet.databinding.FormulariomatFragmentBinding
 import com.example.scholarfleet.models.Materia
-import com.example.scholarfleet.partials.convertirFecha
+import com.example.scholarfleet.utils.convertirFecha
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat

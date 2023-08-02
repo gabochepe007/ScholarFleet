@@ -10,7 +10,7 @@ import android.widget.Toast
 import com.example.scholarfleet.database.Database
 import com.example.scholarfleet.databinding.FragmentFormularioEventBinding
 import com.example.scholarfleet.models.Agenda
-import com.example.scholarfleet.partials.convertirFecha
+import com.example.scholarfleet.utils.convertirFecha
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.text.SimpleDateFormat
 import java.util.Calendar
