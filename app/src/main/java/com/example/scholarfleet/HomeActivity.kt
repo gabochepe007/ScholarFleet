@@ -32,11 +32,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
 
 
 
-        // Get instance
-        // Write a message to the database
-        val database = Firebase.database
-        val myRef = database.getReference("message")
-        myRef.setValue("Hello, World!")
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)

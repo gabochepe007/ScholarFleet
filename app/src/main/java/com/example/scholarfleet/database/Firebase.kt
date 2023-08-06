@@ -6,6 +6,9 @@ import com.example.scholarfleet.firebase.Agenda
 import com.example.scholarfleet.firebase.Materia
 import com.example.scholarfleet.firebase.Professor
 import com.google.firebase.database.*
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class Firebase(context: Context) {
 
@@ -13,7 +16,7 @@ class Firebase(context: Context) {
 
     //Profesores
 
-    fun insertProfessor(professor: Professor){
+    fun insertProfessor(professor: Professor) {
         val professorRef = databaseRef.child("Profesores").push()
         professorRef.setValue(professor)
             .addOnSuccessListener {
@@ -112,5 +115,53 @@ class Firebase(context: Context) {
             }
         })
     }
+
+
+    //Para obtener eventos en la semana
+    fun getNextWeek(dia: String, callback: (List<Materia>) -> Unit) {
+        val materiasRef = databaseRef.child("Materias")
+
+        val startDate = when (dia) {
+            "today" -> getDateString(0)
+            "tomorrow" -> getDateString(1)
+            "day_three" -> getDateString(2)
+            "day_four" -> getDateString(3)
+            "day_five" -> getDateString(4)
+            "day_six" -> getDateString(5)
+            "day_seven" -> getDateString(6)
+            else -> getDateString(0)
+        }
+
+        val endDate = getDateString(7)
+
+        materiasRef.orderByChild("horario").startAt(startDate).endAt(endDate)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val materiasList = mutableListOf<Materia>()
+                    for (dataSnapshot in snapshot.children) {
+                        val materia = dataSnapshot.getValue(Materia::class.java)
+                        materia?.let { materiasList.add(it) }
+                    }
+                    callback(materiasList)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e(
+                        "Database",
+                        "Error al obtener las materias de la próxima semana: ${error.message}"
+                    )
+                    callback(emptyList())
+                }
+            })
+    }
+
+    private fun getDateString(daysToAdd: Int): String {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_YEAR, daysToAdd)
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return sdf.format(calendar.time)
+    }
+
+
 
 }
