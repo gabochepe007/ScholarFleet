@@ -15,7 +15,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.scholarfleet.database.Database
 import com.example.scholarfleet.databinding.ActivityHomeBinding
 import com.google.android.material.navigation.NavigationView
-
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 
 class HomeActivity : AppCompatActivity(), View.OnClickListener{
@@ -31,7 +32,11 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
 
 
 
-
+        // Get instance
+        // Write a message to the database
+        val database = Firebase.database
+        val myRef = database.getReference("message")
+        myRef.setValue("Hello, World!")
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)

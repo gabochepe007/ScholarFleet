@@ -91,6 +91,12 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
         val sentencia: String = when (dia) {
             "today" -> "SELECT * FROM materias WHERE date(horario) BETWEEN date('now') AND date('now', '+1 day') ORDER BY horario ASC;"
+            "tomorrow" -> "SELECT * FROM materias WHERE date(horario) BETWEEN date('now', '+1 day') AND date('now', '+2 day') ORDER BY horario ASC;"
+            "day_three" -> "SELECT * FROM materias WHERE date(horario) BETWEEN date('now', '+2 day) AND date('now', '+3 day') ORDER BY horario ASC;"
+            "day_four" -> "SELECT * FROM materias WHERE date(horario) BETWEEN date('now', '+3 day) AND date('now', '+4 day') ORDER BY horario ASC;"
+            "day_five" -> "SELECT * FROM materias WHERE date(horario) BETWEEN date('now', '+4 day) AND date('now', '+5 day') ORDER BY horario ASC;"
+            "day_six" -> "SELECT * FROM materias WHERE date(horario) BETWEEN date('now', '+5 day) AND date('now', '+6 day') ORDER BY horario ASC;"
+            "day_seven" -> "SELECT * FROM materias WHERE date(horario) BETWEEN date('now', '+5 day) AND date('now', '+6 day') ORDER BY horario ASC;"
             "week" -> "SELECT * FROM materias WHERE date(horario) BETWEEN date('now', '+1 day') AND date('now', '+7 day') ORDER BY horario ASC;"
             else -> "SELECT * FROM materias WHERE date(horario) BETWEEN date('now') AND date('now', '+7 day') ORDER BY horario ASC;"
         }

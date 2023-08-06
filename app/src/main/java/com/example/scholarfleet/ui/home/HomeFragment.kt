@@ -42,25 +42,6 @@ class HomeFragment : Fragment() {
      //   val formattedDate = dateFormat.format(currentDate)
     //    textFecha.text = formattedDate
 
-        val database = Database(requireContext())
-        val listaMaterias = database.getNextWeek()
-
-        if (listaMaterias != null && listaMaterias.moveToFirst()) {
-            // Iterar a través del Cursor y mostrar los resultados en el Logcat
-            do {
-                val nombreMateria = listaMaterias.getString(listaMaterias.getColumnIndex("nombre"))
-                val fechaMateria = listaMaterias.getString(listaMaterias.getColumnIndex("horario"))
-
-                Log.i("Consulta - Nombre Materia:", nombreMateria)
-                Log.i("Consulta - Fecha:", fechaMateria)
-            } while (listaMaterias.moveToNext())
-
-            // Importante cerrar el Cursor una vez que hayamos terminado con él
-            listaMaterias.close()
-        } else {
-            Log.i("Consulta:", "El Cursor es nulo o no tiene resultados")
-        }
-
         return rootView
     }
 

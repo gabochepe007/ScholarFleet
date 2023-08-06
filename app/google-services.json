@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "198807134436",
+    "project_id": "scholarfleet-827ec",
+    "storage_bucket": "scholarfleet-827ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:198807134436:android:5ac8f4b6e579ebcae78cf1",
+        "android_client_info": {
+          "package_name": "com.example.scholarfleet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "198807134436-sib2jdhm4fbuj085g81t0ksfj316kf2j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL8nWN3Bu6S5l_Ppl6NGVCfTd20K0MDPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "198807134436-sib2jdhm4fbuj085g81t0ksfj316kf2j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
