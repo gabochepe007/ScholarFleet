@@ -3,16 +3,26 @@ package com.example.scholarfleet
 import ProfesorAdapter
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
-import com.example.scholarfleet.database.Database
 import com.example.scholarfleet.databinding.FragmentProfesorBinding
-import com.example.scholarfleet.models.Professor
+
+//SQLite
+//import com.example.scholarfleet.database.Database
+//import com.example.scholarfleet.models.Professor
+
+//Firebase
+import com.example.scholarfleet.firebase.Professor
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -44,7 +54,8 @@ class ProfesorFragment : Fragment() {
         val itemSpacingDecoration = ItemSpacingDecoration(spacingInPixels)
         recyclerView.addItemDecoration(itemSpacingDecoration)
 
-        val database = Database(requireContext())
+        //SQLite
+       /* val database = Database(requireContext())
         val listaProfesores = database.getAllProfessors()
 
         val profesores = Professor()
@@ -53,6 +64,27 @@ class ProfesorFragment : Fragment() {
         val adapter = ProfesorAdapter()
         recyclerView.adapter = adapter
         adapter.setProfesores(allProfessors)
+
+        return binding.root*/
+
+        //Firebase
+        val databaseRef = FirebaseDatabase.getInstance().getReference("Profesores")
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val profesoresList = mutableListOf<Professor>()
+                for (dataSnapshot in snapshot.children) {
+                    val professor = Professor.fromSnapshot(dataSnapshot)
+                    profesoresList.add(professor)
+                }
+                val adapter = ProfesorAdapter()
+                recyclerView.adapter = adapter
+                adapter.setProfesores(profesoresList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Database", "Error al obtener los profesores: ${error.message}")
+            }
+        })
 
         return binding.root
     }

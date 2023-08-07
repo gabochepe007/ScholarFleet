@@ -6,15 +6,22 @@ import android.widget.Button
 import android.widget.Toast
 import android.text.InputType
 import android.view.inputmethod.EditorInfo
-import com.example.scholarfleet.database.Database
 import com.example.scholarfleet.databinding.FormularioproFragmentBinding
-import com.example.scholarfleet.models.Professor
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+
+//Complementos de sqlite
+//import com.example.scholarfleet.database.Database
+//import com.example.scholarfleet.models.Professor
+
+//Complementos de firebase
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.example.scholarfleet.firebase.Professor
 
 class FormularioProFragment : BottomSheetDialogFragment() {
     private lateinit var btnSaveProfesor: Button
@@ -132,7 +139,8 @@ class FormularioProFragment : BottomSheetDialogFragment() {
         return true
     }
 
-    private fun guardarProfesor() {
+    //SQLite
+   /* private fun guardarProfesor() {
 
         val professor = Professor()
         professor.nombre = binding.etNombreProfesor.text.toString()
@@ -147,5 +155,30 @@ class FormularioProFragment : BottomSheetDialogFragment() {
         Toast.makeText(requireContext(), "Datos del profesor guardados", Toast.LENGTH_SHORT).show()
         
         dismiss()
+    }*/
+
+    //Firebase
+    private fun guardarProfesor() {
+        val professor = Professor()
+        professor.nomb_pro = binding.etNombreProfesor.text.toString()
+        professor.telefono = binding.etTelefonoProfesor.text.toString()
+        professor.correo = binding.etCorreoProfesor.text.toString()
+        professor.direccion = binding.etDireccionProfesor.text.toString()
+        professor.horario = binding.etHorarioProfesor.text.toString()
+
+        val databaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Profesores")
+        val professorId = databaseRef.push().key
+
+        if (professorId != null) {
+            databaseRef.child(professorId).setValue(professor)
+                .addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Datos del profesor guardados en Firebase", Toast.LENGTH_SHORT).show()
+                    dismiss()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(), "Error al guardar los datos del profesor en Firebase", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
+
 }

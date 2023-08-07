@@ -7,15 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
-import com.example.scholarfleet.database.Database
 import com.example.scholarfleet.databinding.FormulariomatFragmentBinding
-import com.example.scholarfleet.models.Materia
 import com.example.scholarfleet.utils.convertirFecha
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
+
+//SQLite
+//import com.example.scholarfleet.database.Database
+//import com.example.scholarfleet.models.Materia
+
+//Firebase
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.example.scholarfleet.firebase.Materia
 
 class FormularioMatFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FormulariomatFragmentBinding
@@ -104,7 +111,8 @@ class FormularioMatFragment : BottomSheetDialogFragment() {
         return true
     }
 
-    private fun guardarMateria() {
+    //SQLite
+   /* private fun guardarMateria() {
         val materia = Materia()
         materia.nombre = binding.nombrem.text.toString()
         materia.salon = binding.salom.text.toString()
@@ -117,5 +125,28 @@ class FormularioMatFragment : BottomSheetDialogFragment() {
         Toast.makeText(requireContext(), "Datos de la materia guardados", Toast.LENGTH_SHORT).show()
 
         dismiss()
+    }*/
+
+    //Firebase
+    private fun guardarMateria(){
+        val materia = Materia()
+        materia.nombre = binding.nombrem.text.toString()
+        materia.aula = binding.salom.text.toString()
+        materia.horario = convertirFecha(binding.horario.text.toString())
+
+        val databaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Materia")
+        val materiaId = databaseRef.push().key
+
+        if (materiaId != null) {
+            databaseRef.child(materiaId).setValue(materia)
+                .addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Datos de la Materia guardados en Firebase", Toast.LENGTH_SHORT).show()
+                    dismiss()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(), "Error al guardar los datos de la Materia en Firebase", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
+
 }

@@ -2,6 +2,7 @@ package com.example.scholarfleet.ui.agenda
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +10,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scholarfleet.R
-import com.example.scholarfleet.database.Database
 import com.example.scholarfleet.databinding.FragmentAgendaLayoutBinding
-import com.example.scholarfleet.models.Agenda
+import com.example.scholarfleet.firebase.Materia
 import com.example.scholarfleet.partials.EventoAdapter
+import com.example.scholarfleet.partials.MateriaAdapter
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
+//Sqlite
+//import com.example.scholarfleet.database.Database
+//import com.example.scholarfleet.models.Agenda
+
+//Firebase
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -45,7 +55,8 @@ class AgendaFragment : Fragment() {
         val itemSpacingDecoration = AgendaFragment.ItemSpacingDecoration(spacingInPixels)
         recyclerView.addItemDecoration(itemSpacingDecoration)
 
-        val database = Database(requireContext())
+        //SQLite
+        /*val database = Database(requireContext())
         val listEventos = database.getAllEvents()
 
         val eventos = Agenda()
@@ -54,6 +65,27 @@ class AgendaFragment : Fragment() {
         val adapter = EventoAdapter()
         recyclerView.adapter = adapter
         adapter.setEventos(allEventos)
+        return binding.root*/
+
+        //Firebase
+        val databaseRef = FirebaseDatabase.getInstance().getReference("Agenda")
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val agendaList = mutableListOf<Materia>()
+                for (dataSnapshot in snapshot.children) {
+                    val agenda = Materia.fromSnapshot(dataSnapshot)
+                    agendaList.add(agenda)
+                }
+                val adapter = MateriaAdapter()
+                recyclerView.adapter = adapter
+                adapter.setMaterias(agendaList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Database", "Error al obtener los eventos: ${error.message}")
+            }
+        })
+
         return binding.root
     }
 

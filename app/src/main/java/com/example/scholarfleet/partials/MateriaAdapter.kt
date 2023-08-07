@@ -8,7 +8,13 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scholarfleet.R
-import com.example.scholarfleet.models.Materia
+
+//SQLite
+//import com.example.scholarfleet.models.Materia
+
+//Firebase
+import com.example.scholarfleet.firebase.Materia
+
 
 class MateriaAdapter: RecyclerView.Adapter<MateriaAdapter.MateriaViewHolder>() {
     private val materiaList = ArrayList<Materia>()
@@ -27,7 +33,15 @@ class MateriaAdapter: RecyclerView.Adapter<MateriaAdapter.MateriaViewHolder>() {
         return materiaList.size
     }
 
-    fun setMaterias(materias: List<Materia>){
+    //SQLite
+   /* fun setMaterias(materias: List<Materia>){
+        materiaList.clear()
+        materiaList.addAll(materias)
+        notifyDataSetChanged()
+    }*/
+
+    //Firebase
+    fun setMaterias(materias: MutableList<Materia>) {
         materiaList.clear()
         materiaList.addAll(materias)
         notifyDataSetChanged()

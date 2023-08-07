@@ -8,8 +8,12 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scholarfleet.R
-import com.example.scholarfleet.models.Agenda
-import com.example.scholarfleet.models.Materia
+
+//SQLite
+//import com.example.scholarfleet.models.Agenda
+
+//Firebase
+import com.example.scholarfleet.firebase.Agenda
 
 class EventoAdapter: RecyclerView.Adapter<EventoAdapter.EventoViewHolder> () {
     private val eventoList = ArrayList<Agenda>()
@@ -28,7 +32,15 @@ class EventoAdapter: RecyclerView.Adapter<EventoAdapter.EventoViewHolder> () {
         return eventoList.size
     }
 
-    fun setEventos(eventos: List<Agenda>){
+    //SQLite
+    /*fun setEventos(eventos: List<Agenda>){
+        eventoList.clear()
+        eventoList.addAll(eventos)
+        notifyDataSetChanged()
+    }*/
+
+    //Firebase
+    fun setEventos(eventos: MutableList<Agenda>){
         eventoList.clear()
         eventoList.addAll(eventos)
         notifyDataSetChanged()

@@ -7,15 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.scholarfleet.database.Database
 import com.example.scholarfleet.databinding.FragmentFormularioEventBinding
-import com.example.scholarfleet.models.Agenda
 import com.example.scholarfleet.utils.convertirFecha
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
+
+//SQLite
+//import com.example.scholarfleet.database.Database
+//import com.example.scholarfleet.models.Agenda
+
+//Firebase
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.example.scholarfleet.firebase.Agenda
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -80,7 +88,8 @@ class FormularioEventFragment : BottomSheetDialogFragment() {
         return true
     }
 
-    private fun guardarEvento(){
+//    SQLite
+    /*private fun guardarEvento(){
         val evento = Agenda()
         evento.nombre = binding.nombre.text.toString()
 
@@ -98,8 +107,35 @@ class FormularioEventFragment : BottomSheetDialogFragment() {
         Toast.makeText(requireContext(), "Datos de la materia guardados", Toast.LENGTH_SHORT).show()
 
         dismiss()
-    }
+    }*/
 
+//   Firebase
+    private fun guardarEvento(){
+        val evento = Agenda()
+        evento.nombre = binding.nombre.text.toString()
+
+        evento.fecha = convertirFecha(binding.fecha.text.toString())
+        evento.nota = binding.nota.text.toString()
+        evento.categoria = binding.categoria.text.toString()
+
+        val idMatString = binding.materia.text.toString()
+        val idMatEntero: Int = idMatString.toInt()
+        evento.id_mat = idMatEntero
+
+        val databaseRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("Agenda")
+        val agendaId = databaseRef.push().key
+
+        if (agendaId != null) {
+            databaseRef.child(agendaId).setValue(evento)
+                .addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Datos de la Agenda guardados en Firebase", Toast.LENGTH_SHORT).show()
+                    dismiss()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(), "Error al guardar los datos de la Agenda en Firebase", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
     private fun showDatePicker(){
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)

@@ -2,6 +2,7 @@ package com.example.scholarfleet.ui.materia
 
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +11,26 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scholarfleet.ProfesorFragment
 import com.example.scholarfleet.R
-import com.example.scholarfleet.database.Database
-
 import com.example.scholarfleet.databinding.FragmentMateriaBinding
-import com.example.scholarfleet.models.Materia
 import com.example.scholarfleet.partials.MateriaAdapter
+
+
+//Sqlite
+//import com.example.scholarfleet.database.Database
+//import com.example.scholarfleet.models.Materia
+
+//Firebase
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.example.scholarfleet.firebase.Materia
+
+
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
 
 class MateriaFragment : Fragment() {
     private var _binding: FragmentMateriaBinding? = null
@@ -52,7 +65,8 @@ class MateriaFragment : Fragment() {
         val itemSpacingDecoration = ProfesorFragment.ItemSpacingDecoration(spacingInPixels)
         recyclerView.addItemDecoration(itemSpacingDecoration)
 
-        val database = Database(requireContext())
+        //SQLite
+       /* val database = Database(requireContext())
         val listaMaterias = database.getAllMaterias()
 
         val materias = Materia()
@@ -61,6 +75,27 @@ class MateriaFragment : Fragment() {
         val adapter = MateriaAdapter()
         recyclerView.adapter = adapter
         adapter.setMaterias(allMaterias)
+        return binding.root*/
+
+        //Firebase
+        val databaseRef = FirebaseDatabase.getInstance().getReference("Materia")
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val materiaList = mutableListOf<Materia>()
+                for (dataSnapshot in snapshot.children) {
+                    val materia = Materia.fromSnapshot(dataSnapshot)
+                    materiaList.add(materia)
+                }
+                val adapter = MateriaAdapter()
+                recyclerView.adapter = adapter
+                adapter.setMaterias(materiaList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Database", "Error al obtener los registros de Materia: ${error.message}")
+            }
+        })
+
         return binding.root
     }
 

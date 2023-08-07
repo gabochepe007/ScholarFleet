@@ -6,7 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.scholarfleet.R
-import com.example.scholarfleet.models.Professor
+
+//SQLite
+//import com.example.scholarfleet.models.Professor
+//Firebase
+import com.example.scholarfleet.firebase.Professor
 
 class ProfesorAdapter : RecyclerView.Adapter<ProfesorAdapter.ProfesorViewHolder>() {
 
@@ -26,11 +30,20 @@ class ProfesorAdapter : RecyclerView.Adapter<ProfesorAdapter.ProfesorViewHolder>
         return profesoresList.size
     }
 
-    fun setProfesores(profesores: List<Professor>) {
+    //SQLite
+    /*fun setProfesores(profesores: List<Professor>) {
+        profesoresList.clear()
+        profesoresList.addAll(profesores)
+        notifyDataSetChanged()
+    }*/
+
+    //Firebase
+    fun setProfesores(profesores: MutableList<Professor>) {
         profesoresList.clear()
         profesoresList.addAll(profesores)
         notifyDataSetChanged()
     }
+
 
     class ProfesorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -38,8 +51,13 @@ class ProfesorAdapter : RecyclerView.Adapter<ProfesorAdapter.ProfesorViewHolder>
         private val logoTextView: TextView = itemView.findViewById(R.id.logoL)
 
         fun bind(profesor: Professor) {
-            nombreTextView.text = profesor.nombre
-            val firstLetter = profesor.nombre.firstOrNull()?.toString()?.toUpperCase() ?: ""
+            //SQLite
+            //nombreTextView.text = profesor.nombre
+            //val firstLetter = profesor.nombre.firstOrNull()?.toString()?.toUpperCase() ?: ""
+            //Firebase
+            nombreTextView.text = profesor.nomb_pro
+            val firstLetter = profesor.nomb_pro.firstOrNull()?.toString()?.toUpperCase() ?: ""
+
             logoTextView.text = firstLetter
 
 
