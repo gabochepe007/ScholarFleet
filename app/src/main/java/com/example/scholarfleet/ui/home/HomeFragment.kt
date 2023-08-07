@@ -48,13 +48,13 @@ class HomeFragment : Fragment() {
     // Función de ejemplo para obtener datos para el RecyclerView
     private fun getSampleData(): List<String> {
         return listOf(
-            "Materia 1",
-            "Materia 2",
-            "Materia 3",
-            "Materia 1",
-            "Materia 2",
-            "Materia 3",
-            "Materia 1"
+            "Evento 1",
+            "Evento 2",
+            "Evento 3",
+            "Evento 4",
+            "Evento 5",
+            "Evento 6",
+            "Evento 7"
             // Agrega más elementos aquí según tus necesidades
         )
     }

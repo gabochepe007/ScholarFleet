@@ -57,14 +57,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/md_theme_light_secondaryContainer"
+        android:backgroundTint="@color/color3"
         android:contentDescription="Menu Materia"
         android:visibility="gone"
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/fab_menu_actions"
         app:layout_constraintEnd_toEndOf="@+id/fab_menu_actions"
         app:srcCompat="@drawable/baseline_book_24"
-        app:tint="@color/md_theme_dark_secondaryContainer" />
+        app:tint="@color/md_theme_light_background" />
 
     <TextView
         android:id="@+id/fab_menu_add_alarm_text"
@@ -72,18 +72,19 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/add_alarm"
-        android:textColor="@color/md_theme_light_surfaceTint"
+        android:textColor="@color/md_theme_dark_tertiaryContainer"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/fab_menu_add_alarm"
         app:layout_constraintEnd_toStartOf="@+id/fab_menu_add_alarm"
-        app:layout_constraintTop_toTopOf="@+id/fab_menu_add_alarm" />
+        app:layout_constraintTop_toTopOf="@+id/fab_menu_add_alarm"
+        style="@style/etiqueta"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_menu_add_person"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/md_theme_light_tertiaryContainer"
+        android:backgroundTint="@color/color3"
         android:contentDescription="Menu Person"
         android:visibility="gone"
         app:fabSize="normal"
@@ -91,7 +92,7 @@
         app:layout_constraintEnd_toEndOf="@+id/fab_menu_add_alarm"
         app:layout_constraintStart_toStartOf="@+id/fab_menu_add_alarm"
         app:srcCompat="@drawable/baseline_book_24"
-        app:tint="@color/md_theme_light_tertiary" />
+        app:tint="@color/md_theme_light_background"/>
 
     <TextView
         android:id="@+id/fab_menu_add_person_text"
@@ -99,18 +100,19 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/add_person"
-        android:textColor="@color/md_theme_light_surfaceTint"
+        android:textColor="@color/md_theme_dark_tertiaryContainer"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/fab_menu_add_person"
         app:layout_constraintEnd_toStartOf="@+id/fab_menu_add_person"
-        app:layout_constraintTop_toTopOf="@+id/fab_menu_add_person" />
+        app:layout_constraintTop_toTopOf="@+id/fab_menu_add_person"
+        style="@style/etiqueta"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_menu_add_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/md_theme_light_secondaryContainer"
+        android:backgroundTint="@color/color3"
         android:contentDescription="Menu Event"
         android:visibility="gone"
         app:fabSize="normal"
@@ -118,7 +120,7 @@
         app:layout_constraintEnd_toEndOf="@+id/fab_menu_add_person"
         app:layout_constraintStart_toStartOf="@+id/fab_menu_add_person"
         app:srcCompat="@drawable/baseline_contacts_24"
-        app:tint="@color/md_theme_light_tertiary" />
+        app:tint="@color/md_theme_light_background"/>
 
     <TextView
         android:id="@+id/fab_menu_add_event_text"
@@ -126,10 +128,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="Evento"
-        android:textColor="#1F97CF"
+        android:textColor="@color/md_theme_dark_tertiaryContainer"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/fab_menu_add_event"
         app:layout_constraintEnd_toStartOf="@+id/fab_menu_add_event"
-        app:layout_constraintTop_toTopOf="@+id/fab_menu_add_event" />
+        app:layout_constraintTop_toTopOf="@+id/fab_menu_add_event"
+        style="@style/etiqueta"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

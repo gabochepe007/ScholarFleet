@@ -4,7 +4,7 @@
     <style name="etiqueta">
         <item name="android:background">
         @drawable/fondo_eti_fab</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">#CD1F1F</item>
 
 
     </style>

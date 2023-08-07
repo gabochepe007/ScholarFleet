@@ -64,11 +64,7 @@ class HomeAdapter(private val data: List<String>) :
             infoTextView.text = dayText
 
             //
-            boton.setOnClickListener {
 
-
-
-            }
         }
 
         private fun getDayText(dateString: String): String {
