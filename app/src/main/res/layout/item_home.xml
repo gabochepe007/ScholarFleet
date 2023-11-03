@@ -61,7 +61,7 @@
                 android:id="@+id/nombreTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Eventos"
+                android:text="Dia de hoy"
                 android:textSize="16sp"
                 android:textColor="@color/seed"
                 android:background="@drawable/baseline_book_24"
